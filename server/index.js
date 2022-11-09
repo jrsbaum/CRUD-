@@ -2,7 +2,7 @@ const express = require("express");
 const servidor = express();
 const NeDB = require("nedb");
 const db = new NeDB({
-  filename: "produtos.db",
+  filename: "dados.db",
   autoload: true,
 });
 
@@ -13,7 +13,7 @@ servidor.use((req, res, next) => {
   next();
 });
 
-servidor.get("/produtos", (req, res) => {
+servidor.get("/dados", (req, res) => {
   db.find({}).exec((erro, dados) => {
     if (erro) {
       console.error(erro);
@@ -23,7 +23,7 @@ servidor.get("/produtos", (req, res) => {
   });
 });
 
-servidor.post("/produtos", (req, res) => {
+servidor.post("/dados", (req, res) => {
   db.insert(req.body, (erro, novoProduto) => {
     if (erro) {
       console.error(erro);
@@ -34,7 +34,7 @@ servidor.post("/produtos", (req, res) => {
   });
 });
 
-servidor.get("/produtos/:id", (req, res) => {
+servidor.get("/dados/:id", (req, res) => {
   //listando 1 registro apenas com findOne e passando a variavel dentro
   db.findOne({ _id: req.params.id }).exec((erro, dados) => {
     if (erro) {
@@ -46,7 +46,7 @@ servidor.get("/produtos/:id", (req, res) => {
   });
 });
 
-servidor.put("/produtos/:id", (req, res) => {
+servidor.put("/dados/:id", (req, res) => {
   db.update({ _id: req.params.id }, req.body, (erro) => {
     if (erro) {
       console.error(erro);
@@ -59,7 +59,7 @@ servidor.put("/produtos/:id", (req, res) => {
   });
 });
 
-servidor.delete("/produtos/:id", (req, res) => {
+servidor.delete("/dados/:id", (req, res) => {
   db.remove({ _id: req.params.id }, {}, (erro, registrosRemovidos) => {
     if (erro) {
       console.error(erro);
